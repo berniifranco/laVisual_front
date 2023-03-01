@@ -1,16 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import { API_BASE_URL } from '../config';
 
 function Register() {
 
-    let paises = [];
+    const [paises, setPaises] = useState([]);
 
-    fetch('https://restcountries.com/v3.1/all')
-        .then(response => response.json())
-        .then(paises1 => {
-            paises1.map(pais => paises.push(pais))
-        })
+    useEffect(() => {
+        fetch('https://restcountries.com/v3.1/all')
+            .then(response => response.json())
+            .then(paises1 => {
+                let listadoPaises = [];
+                paises1.map(pais => listadoPaises.push(pais.translations.spa.common))
+                setPaises(listadoPaises)
+            })
+    }, [])
 
     const [nombre, setNombre] = useState('');
     const [email, setEmail] = useState('');
@@ -23,8 +27,6 @@ function Register() {
     const [provincia, setProvincia] = useState('');
     const [pais, setPais] = useState('');
     const [loading, setLoading] = useState(false);
-
-    console.log(paises);
 
     const signup = (e) => {
         e.preventDefault();
@@ -108,12 +110,17 @@ function Register() {
                 </div>
                 <div className="col-md-4">
                     <label htmlFor="pais" className="form-label">País</label>
-                    <input type="text" className="form-control" id="pais" value={pais} onChange={(ev) => setPais(ev.target.value)} />
+                    <select id="pais" className="form-select" onChange={(ev) => setPais(ev.target.value)}>
+                        <option>Elige...</option>
+                        {paises.map((pais, i) => {
+                                return <option value={pais} key={i}>{pais}</option>
+                            })}
+                    </select>
                 </div>
                 <div className="col-12">
                     <div className="form-check">
-                        <input className="form-check-input" type="checkbox" id="gridCheck" />
-                        <label className="form-check-label" htmlFor="gridCheck">
+                        <input className="form-check-input" type="checkbox" id="aceptar" />
+                        <label className="form-check-label" htmlFor="aceptar">
                             Acepto los términos y condiciones
                         </label>
                     </div>
