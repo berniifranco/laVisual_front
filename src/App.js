@@ -1,12 +1,18 @@
+import { Routes, Route } from 'react-router-dom';
 import Header from "./components/Header";
-import Register from "./components/Register";
+import Home from "./components/Home";
+import Register from './components/Register';
+import Login from './components/Login';
 
 function App() {
   return (
     <div className="App">
       <Header />
-      <Register />
-      <h1>La Visual</h1>
+      <Routes>
+        <Route path='/' exact={true} Component={Home} />
+        <Route path='/register' exact={true} Component={Register} />
+        <Route path='/login' exact={true} Component={Login} />
+      </Routes>
     </div>
   );
 }
