@@ -43,14 +43,14 @@ function Login () {
                         setErrores(errors);
                         Swal.fire({
                             icon: 'error',
-                            title: 'Hubo un problema con el login'
+                            title: 'HubCredenciales inválidas'
                         });setLoading(false);
                     }
                 })
         } else {
             Swal.fire({
                 icon: 'error',
-                title: 'Hubo un error con el login'
+                title: 'Credenciales inválidas'
             });
             setLoading(false);
             setErrores(errors);
