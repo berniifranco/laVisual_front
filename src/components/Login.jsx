@@ -39,6 +39,9 @@ function Login () {
                         });
                         setEmail('');
                         setContrasena('');
+                        setTimeout(() => {
+                            console.log('Entre en el timeout');
+                        }, 2500);
                     } else {
                         setErrores(errors);
                         Swal.fire({
