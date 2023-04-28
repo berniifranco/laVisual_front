@@ -11,8 +11,6 @@ function Header() {
             localStorage.removeItem('token');
         } else {
             setError('Error, no ha iniciado sesión');
-            console.log(error);
-            console.log(error);
         };
     };
 
