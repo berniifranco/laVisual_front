@@ -1,6 +1,21 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function Header() {
+
+    const [error, setError] = useState('');
+
+    const logout = (e) => {
+        e.preventDefault();
+        if (localStorage.getItem('token') != null) {
+            localStorage.removeItem('token');
+        } else {
+            setError('Error, no ha iniciado sesión');
+            console.log(error);
+            console.log(error);
+        };
+    };
+
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid">
@@ -34,6 +49,11 @@ function Header() {
                         </li>
                         <li className="nav-item">
                             <Link to='/login' className="nav-link active" aria-current="login">Iniciar Sesión</Link>
+                        </li>
+                        <li className="nav-item">
+                            <form onSubmit={(e) => logout(e)}>
+                                <Link to='/' className="nav-link active" aria-current="login" onClick={(e) => logout(e)}>Cerrar Sesión</Link>
+                            </form>
                         </li>
                     </ul>
                 </div>

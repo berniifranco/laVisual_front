@@ -30,8 +30,8 @@ function Login () {
                 body: JSON.stringify(requestData),
                 headers: { "Content-type": "application/json" }
             })
-                .then((result) => {
-                    if (result.status === 201) {
+                .then((response => {
+                    if (response.status === 201 || response.status === 200) {
                         setLoading(false);
                         Swal.fire({
                             icon: 'success',
@@ -39,15 +39,19 @@ function Login () {
                         });
                         setEmail('');
                         setContrasena('');
-                        setTimeout(() => {
-                            console.log('Entre en el timeout');
-                        }, 2500);
                     } else {
                         setErrores(errors);
                         Swal.fire({
                             icon: 'error',
                             title: 'HubCredenciales inválidas'
-                        });setLoading(false);
+                        });
+                        setLoading(false);
+                    }
+                    return response.json();
+                }))
+                .then((result) => {
+                    if(result.token) {
+                        localStorage.setItem('token', result.token);
                     }
                 })
         } else {
@@ -79,7 +83,7 @@ function Login () {
                     {errores.contrasena && <span className='text-danger'>{errores.contrasena}</span>}
                 </div>
                 <div className="col-12">
-                    <button type="submit" className="btn btn-primary">Registrarme</button>
+                    <button type="submit" className="btn btn-primary">Iniciar Sesión</button>
                 </div>
             </form>
         </div>
